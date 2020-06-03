@@ -2,6 +2,7 @@ package com.itslp.tareas.viewmodel;
 
 import android.app.Application;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
@@ -14,12 +15,12 @@ public class TareasDialogViewModel extends AndroidViewModel {
     private LiveData<List<TareasEntity>> allTareas;
     private TareasRepository tareasRepository;
 
-    public TareasDialogViewModel(Application application){
+    public TareasDialogViewModel(@NonNull Application application){
         super(application);
 
         tareasRepository = new TareasRepository(application);
         allTareas = tareasRepository.RetrieveList();
-    } //NuevaNotaDialogViewModel
+    }
 
     //El fragment que insert una nueva tarea deberá comunicarlo a este ViewModel
     public void Create(TareasEntity nuevaEntity){

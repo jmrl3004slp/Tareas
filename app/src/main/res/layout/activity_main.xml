@@ -10,7 +10,7 @@
         android:id="@+id/list_tareas"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/fragment_tarea_list" />
+        tools:listitem="@layout/fragment_tarea" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btn_add_Tarea"

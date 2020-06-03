@@ -16,7 +16,6 @@ import com.itslp.tareas.db.entity.TareasEntity;
 import java.util.List;
 
 public class MyTareaRecyclerViewAdapter extends ListAdapter<TareasEntity, MyTareaRecyclerViewAdapter.ViewHolder>  {
-    private List<TareasEntity> mValues;
     private OnItemClickListener mListener;
 
     protected MyTareaRecyclerViewAdapter(@NonNull DiffUtil.ItemCallback<TareasEntity> diffCallback) {
@@ -49,26 +48,13 @@ public class MyTareaRecyclerViewAdapter extends ListAdapter<TareasEntity, MyTare
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mItem = mValues.get(position);
-        holder.textViewIdTarea.setText(String.valueOf(holder.mItem.getId()));
-        holder.textViewNombreTarea.setText(holder.mItem.getNombre());
-    }
-
-    @Override
-    public int getItemCount() {
-        if (!mValues.isEmpty())
-            return mValues.size();
-        else
-            return 0;
-    }
-
-    public void setTareas(List<TareasEntity> nuevasTareas) {
-        this.mValues = nuevasTareas;
-        notifyDataSetChanged();
+        TareasEntity currentTareas = getItem(position);
+        holder.textViewIdTarea.setText(String.valueOf(currentTareas.getId()));
+        holder.textViewNombreTarea.setText(currentTareas.getNombre());
     }
 
     public TareasEntity getTareaAt(int position) {
-        return mValues.get(position);
+        return getItem(position);
     }
 
     public interface OnItemClickListener {
@@ -80,20 +66,16 @@ public class MyTareaRecyclerViewAdapter extends ListAdapter<TareasEntity, MyTare
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public final View mView;
-        public final TextView textViewIdTarea;
-        public final TextView textViewNombreTarea;
-
-        public TareasEntity mItem;
+        private TextView textViewIdTarea;
+        private TextView textViewNombreTarea;
 
         public ViewHolder(View view) {
             super(view);
-            mView = view;
 
             this.textViewIdTarea = view.findViewById(R.id.txtIdTarea);
             this.textViewNombreTarea = view.findViewById(R.id.txtNombreTarea);
 
-            mView.setOnClickListener(new View.OnClickListener() {
+            view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     int position = getAdapterPosition();

@@ -35,6 +35,7 @@ public class DialogInsertTarea extends DialogFragment {
 
         //Inflar y establecer el layout para el dialogo
         builder.setView(inflater.inflate(R.layout.dialog_insert_tarea, null))
+                .setTitle("Añadir tarea")
                 .setPositiveButton(android.R.string.yes,  new DialogInterface.OnClickListener(){
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {

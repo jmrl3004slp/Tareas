@@ -5,4 +5,6 @@
     <string name="insertar_descripci_n_de_la_tarea">Descripción de la tarea</string>
     <string name="acceso_al_sistema">Acceso al Sistema</string>
     <string name="edit_add_tarea">Añadir / Editar Tarea</string>
+    <string name="actualizar_tarea">Actualizar Tarea</string>
+    <string name="cancelar">Cancelar</string>
 </resources>

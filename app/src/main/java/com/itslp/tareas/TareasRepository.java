@@ -27,11 +27,11 @@ public class TareasRepository {
         new InsertAsyncTask(tareasDao).execute(tarea);
     }//insert
 
+    public LiveData<List<TareasEntity>> RetrieveList() { return allTareas; }//getAll
+
     public void Update(TareasEntity tareasEntity) {
         new UpdateAsyncTask(tareasDao).execute(tareasEntity);
     }
-
-    public LiveData<List<TareasEntity>> RetrieveList() { return allTareas; }//getAll
 
     public void Delete(TareasEntity tarea) {
         new DeleteAsyncTask(tareasDao).execute(tarea);
