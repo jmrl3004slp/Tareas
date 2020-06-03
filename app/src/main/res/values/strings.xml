@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Tareas</string>
+    <string name="btn_tareas">Agregar Tarea</string>
+    <string name="nombre_de_la_tarea">Nombre de la tarea</string>
+    <string name="insertar_descripci_n_de_la_tarea">Descripción de la tarea</string>
+    <string name="acceso_al_sistema">Acceso al Sistema</string>
+    <string name="edit_add_tarea">Añadir / Editar Tarea</string>
+</resources>
