@@ -24,10 +24,12 @@ public class TareasRepository {
     //La inserción puede tardar un poco y podría bloquearse la interface principal, por eso
     //ponemos éste método en un AsyncTask
     public void Create (TareasEntity tarea) {
-        new InsertAsyncTask(tareasDao).execute(tarea);
+        new CreateAsyncTask(tareasDao).execute(tarea);
     }//insert
 
-    public LiveData<List<TareasEntity>> RetrieveList() { return allTareas; }//getAll
+    public LiveData<List<TareasEntity>> RetrieveList() {
+        return allTareas;
+    }//getAll
 
     public void Update(TareasEntity tareasEntity) {
         new UpdateAsyncTask(tareasDao).execute(tareasEntity);
@@ -37,11 +39,15 @@ public class TareasRepository {
         new DeleteAsyncTask(tareasDao).execute(tarea);
     }
 
+    public void DeleteAll() {
+        new DeleteAllAsyncTask(tareasDao).execute();
+    }
+
     //=================================================================================
-    private static class InsertAsyncTask extends AsyncTask<TareasEntity, Void, Void> {
+    private static class CreateAsyncTask extends AsyncTask<TareasEntity, Void, Void> {
         private TareasDao notaDaoAsyncTask;
 
-        InsertAsyncTask (TareasDao dao){
+        CreateAsyncTask(TareasDao dao){
             notaDaoAsyncTask = dao;
         }//Constructor
 
@@ -79,4 +85,18 @@ public class TareasRepository {
             return null;
         }//doInBackground
     }//DeleteAsyncTask
+
+    private static class DeleteAllAsyncTask extends AsyncTask<Void, Void, Void> {
+        private TareasDao notaDaoAsyncTask;
+
+        DeleteAllAsyncTask (TareasDao dao){
+            notaDaoAsyncTask = dao;
+        }//Constructor
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            notaDaoAsyncTask.deleteAll();
+            return null;
+        }//doInBackground
+    }//DeleteAllAsyncTask
 }

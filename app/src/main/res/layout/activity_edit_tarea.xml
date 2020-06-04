@@ -15,12 +15,13 @@
         android:hint="@string/insertar_descripci_n_de_la_tarea" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btn_edit_tarea"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/actualizar_tarea" />
 
     <Button
+        android:id="@+id/btn_cancel_tarea"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/cancelar"/>

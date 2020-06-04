@@ -7,4 +7,8 @@
     <string name="edit_add_tarea">Añadir / Editar Tarea</string>
     <string name="actualizar_tarea">Actualizar Tarea</string>
     <string name="cancelar">Cancelar</string>
+    <string name="eliminar_todas_las_tareas">Eliminar todas las tareas</string>
+    <string name="descripcion_de_la_actividad">Descripción de la actividad</string>
+    <string name="aniadir_actividad">Añadir actividad</string>
+    <string name="actualizar_actividad">Actualizar actividad</string>
 </resources>

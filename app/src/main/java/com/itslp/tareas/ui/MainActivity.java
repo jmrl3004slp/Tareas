@@ -2,6 +2,9 @@ package com.itslp.tareas.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -17,6 +20,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.itslp.tareas.R;
 import com.itslp.tareas.db.entity.TareasEntity;
 import com.itslp.tareas.ui.activities.EditTareaActivity;
+import com.itslp.tareas.ui.adapters.MyTareaRecyclerViewAdapter;
 import com.itslp.tareas.ui.dialogs.DialogInsertTarea;
 import com.itslp.tareas.viewmodel.TareasDialogViewModel;
 
@@ -113,6 +117,25 @@ public class MainActivity extends AppCompatActivity implements DialogInsertTarea
             Toast.makeText(this, "Tarea actualizada", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(this, "Tarea no guardada", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu_principal, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.delete_all_notes:
+                tareasDialogViewModel.DeleteAll();
+                Toast.makeText(this, "Todas las tareas eliminadas", Toast.LENGTH_SHORT).show();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 

@@ -1,4 +1,4 @@
-package com.itslp.tareas.ui;
+package com.itslp.tareas.ui.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,8 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.itslp.tareas.R;
 import com.itslp.tareas.db.entity.TareasEntity;
-
-import java.util.List;
 
 public class MyTareaRecyclerViewAdapter extends ListAdapter<TareasEntity, MyTareaRecyclerViewAdapter.ViewHolder>  {
     private OnItemClickListener mListener;

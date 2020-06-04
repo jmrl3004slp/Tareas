@@ -24,4 +24,7 @@ public interface TareasDao {
 
     @Delete
     void delete(TareasEntity tarea);
+
+    @Query("DELETE FROM tareas")
+    void deleteAll();
 }

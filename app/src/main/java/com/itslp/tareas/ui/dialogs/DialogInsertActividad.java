@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -16,13 +15,13 @@ import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.itslp.tareas.R;
-import com.itslp.tareas.db.entity.TareasEntity;
-import com.itslp.tareas.viewmodel.TareasDialogViewModel;
+import com.itslp.tareas.db.entity.ActividadesEntity;
+import com.itslp.tareas.viewmodel.ActividadesDialogViewModel;
 
-import java.util.Date;
+public class DialogInsertActividad extends DialogFragment {
+    public static int EXTRA_ID = 0;
 
-public class DialogInsertTarea extends DialogFragment {
-    OnSimpleDialogListener listener;
+    private DialogInsertActividad.OnSimpleDialogListener listener;
     public interface OnSimpleDialogListener {
         void clickBotonOK();
     }
@@ -34,26 +33,26 @@ public class DialogInsertTarea extends DialogFragment {
         LayoutInflater inflater = getActivity().getLayoutInflater();
 
         //Inflar y establecer el layout para el dialogo
-        builder.setView(inflater.inflate(R.layout.dialog_insert_tarea, null))
-                .setTitle("Añadir tarea")
+        builder.setView(inflater.inflate(R.layout.dialog_insert_activitidad, null))
+                .setTitle("Añadir actividad " + String.valueOf(EXTRA_ID))
                 .setPositiveButton(android.R.string.yes,  new DialogInterface.OnClickListener(){
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        EditText etnombre = getDialog().findViewById(R.id.EditTarea);
+                        EditText etnombre = getDialog().findViewById(R.id.EditActividad);
 
-                        String tarea = etnombre.getText().toString();
-                        if (!tarea.equals("")) {
-                            TareasDialogViewModel mViewModel = ViewModelProviders.of(getActivity()).get(TareasDialogViewModel.class);
-                            mViewModel.Create(new TareasEntity(tarea, new Date().toString()));
+                        String actividad = etnombre.getText().toString();
+                        if (!actividad.equals("")) {
+                            ActividadesDialogViewModel mViewModel = ViewModelProviders.of(getActivity()).get(ActividadesDialogViewModel.class);
+                            mViewModel.Create(new ActividadesEntity(EXTRA_ID, actividad, false));
 
-                            Toast.makeText(getContext(), "Tarea guardada", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), "Actividad guardada", Toast.LENGTH_SHORT).show();
 
                             dialogInterface.dismiss();
                         }
                         else {
                             final AlertDialog.Builder builder1 = new AlertDialog.Builder(getActivity());
                             builder1.setTitle("AVISO");
-                            builder1.setMessage("La tarea no puede estar vacía");
+                            builder1.setMessage("La actividad no puede estar vacía");
                             builder1.setCancelable(false);
                             builder1.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                                 @Override
@@ -71,7 +70,7 @@ public class DialogInsertTarea extends DialogFragment {
                 .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        getActivity().finish();
+                        dialogInterface.dismiss();
                     }
                 });
 
@@ -82,6 +81,6 @@ public class DialogInsertTarea extends DialogFragment {
     public void onAttach(Context context) {
         super.onAttach(context);
 
-        listener = (OnSimpleDialogListener) context;
+        listener = (DialogInsertActividad.OnSimpleDialogListener) context;
     }
 }

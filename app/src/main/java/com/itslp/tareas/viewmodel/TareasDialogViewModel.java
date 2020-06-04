@@ -38,4 +38,8 @@ public class TareasDialogViewModel extends AndroidViewModel {
     public void Delete(TareasEntity eliminaEntity) {
         tareasRepository.Delete(eliminaEntity);
     }
+
+    public void DeleteAll() {
+        tareasRepository.DeleteAll();
+    }
 }
