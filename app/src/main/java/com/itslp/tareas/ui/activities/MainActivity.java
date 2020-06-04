@@ -1,4 +1,4 @@
-package com.itslp.tareas.ui;
+package com.itslp.tareas.ui.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,7 +19,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.itslp.tareas.R;
 import com.itslp.tareas.db.entity.TareasEntity;
-import com.itslp.tareas.ui.activities.EditTareaActivity;
 import com.itslp.tareas.ui.adapters.MyTareaRecyclerViewAdapter;
 import com.itslp.tareas.ui.dialogs.DialogInsertTarea;
 import com.itslp.tareas.viewmodel.TareasDialogViewModel;

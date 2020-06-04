@@ -13,12 +13,10 @@ import java.util.List;
 
 public class ActividadesRepository {
     private ActividadesDao actividadesDao;
-    public List<ActividadesEntity> allActividades;
 
     public ActividadesRepository(Application application) {
         TareaRoomDatabase db = TareaRoomDatabase.getDataBase(application);
         actividadesDao            = db.actividadesDao();
-        allActividades            = actividadesDao.retrieveList();
     }
 
     //La inserción puede tardar un poco y podría bloquearse la interface principal, por eso
@@ -27,8 +25,8 @@ public class ActividadesRepository {
         new ActividadesRepository.CreateAsyncTask(actividadesDao).execute(actividadesEntity);
     }//insert
 
-    public List<ActividadesEntity> RetrieveList() {
-        return allActividades;
+    public LiveData<List<ActividadesEntity>> RetrieveList(int idTarea) {
+        return actividadesDao.retrieveList(idTarea);
     }//getAll
 
     public void Update(ActividadesEntity actividadesEntity) {

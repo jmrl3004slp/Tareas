@@ -12,17 +12,30 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:layout_margin="8dp"
         android:hint="@string/insertar_descripci_n_de_la_tarea" />
 
     <Button
         android:id="@+id/btn_edit_tarea"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
         android:text="@string/actualizar_tarea" />
 
     <Button
         android:id="@+id/btn_cancel_tarea"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/cancelar"/>
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:text="@string/cancelar" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/list_actividades2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="8dp"
+        android:visibility="invisible"
+        tools:listitem="@layout/fragment_actividad" />
 </LinearLayout>

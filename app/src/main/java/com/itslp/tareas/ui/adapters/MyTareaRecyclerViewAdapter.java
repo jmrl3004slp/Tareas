@@ -47,7 +47,6 @@ public class MyTareaRecyclerViewAdapter extends ListAdapter<TareasEntity, MyTare
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         TareasEntity currentTareas = getItem(position);
-        holder.textViewIdTarea.setText(String.valueOf(currentTareas.getId()));
         holder.textViewNombreTarea.setText(currentTareas.getNombre());
     }
 
@@ -64,13 +63,11 @@ public class MyTareaRecyclerViewAdapter extends ListAdapter<TareasEntity, MyTare
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView textViewIdTarea;
         private TextView textViewNombreTarea;
 
         public ViewHolder(View view) {
             super(view);
 
-            this.textViewIdTarea = view.findViewById(R.id.txtIdTarea);
             this.textViewNombreTarea = view.findViewById(R.id.txtNombreTarea);
 
             view.setOnClickListener(new View.OnClickListener() {

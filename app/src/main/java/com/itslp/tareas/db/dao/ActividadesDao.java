@@ -16,8 +16,8 @@ public interface ActividadesDao {
     @Insert
     void create(ActividadesEntity actividad);
 
-    @Query("SELECT * FROM actividades")
-    List<ActividadesEntity> retrieveList();
+    @Query("SELECT * FROM actividades WHERE idTarea = :idTarea")
+    LiveData<List<ActividadesEntity>> retrieveList(int idTarea);
 
     @Update
     void update(ActividadesEntity actividad);

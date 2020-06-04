@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
 
 import com.itslp.tareas.R;
 
@@ -19,12 +18,11 @@ public class DialogUpdateActividad extends Dialog implements View.OnClickListene
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.dialog_update_actividad);
     }
 
     @Override
     public void onClick(View view) {
-
+        dismiss();
     }
 }

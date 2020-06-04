@@ -1,11 +1,9 @@
 package com.itslp.tareas.ui.activities;
 
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.service.autofill.CharSequenceTransformation;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,25 +14,19 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.room.Room;
 
 import com.itslp.tareas.R;
-import com.itslp.tareas.db.TareaRoomDatabase;
 import com.itslp.tareas.db.entity.ActividadesEntity;
-import com.itslp.tareas.db.entity.TareasEntity;
 import com.itslp.tareas.ui.adapters.MyActividadRecyclerViewAdapter;
-import com.itslp.tareas.ui.adapters.MyTareaRecyclerViewAdapter;
 import com.itslp.tareas.ui.dialogs.DialogInsertActividad;
-import com.itslp.tareas.ui.dialogs.DialogUpdateActividad;
 import com.itslp.tareas.viewmodel.ActividadesDialogViewModel;
-import com.itslp.tareas.viewmodel.TareasDialogViewModel;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class EditTareaActivity extends AppCompatActivity implements DialogInsertActividad.OnSimpleDialogListener {
@@ -42,22 +34,28 @@ public class EditTareaActivity extends AppCompatActivity implements DialogInsert
     public static final String EXTRA_NAME = "EXTRA_NAME";
     public static final String EXTRA_DATE = "EXTRA_DATE";
 
-    CharSequence items [];
-    boolean marcados[];
+    private int _id;
+    private String _Fecha;
 
-    int _id;
-    String _Fecha;
+    private EditText etDescripcion;
+    private Button btnEditTarea;
+    private Button btnCancelar;
+    private RecyclerView recyclerView;
 
-    ActividadesDialogViewModel actividadesDialogViewModel;
+    private ActividadesDialogViewModel actividadesDialogViewModel;
+    private CharSequence [] items;
+    private boolean[] marcados;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_tarea);
 
-        final EditText etDescripcion = findViewById(R.id.EditTarea2);
-
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close_black_24dp);
+
+        final MyActividadRecyclerViewAdapter adapter = new MyActividadRecyclerViewAdapter();
+
+        etDescripcion = findViewById(R.id.EditTarea2);
 
         Intent intent = getIntent();
         if (intent.hasExtra(EXTRA_ID)) {
@@ -67,7 +65,7 @@ public class EditTareaActivity extends AppCompatActivity implements DialogInsert
             _id = intent.getIntExtra(EXTRA_ID, -1);
         }
 
-        Button btnEditTarea = findViewById(R.id.btn_edit_tarea);
+        btnEditTarea = findViewById(R.id.btn_edit_tarea);
         btnEditTarea.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -90,11 +88,32 @@ public class EditTareaActivity extends AppCompatActivity implements DialogInsert
             }
         });
 
-        Button btnCancelar = findViewById(R.id.btn_cancel_tarea);
+        btnCancelar = findViewById(R.id.btn_cancel_tarea);
         btnCancelar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
+            }
+        });
+
+        recyclerView = findViewById(R.id.list_actividades2);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setAdapter(adapter);
+
+        actividadesDialogViewModel = ViewModelProviders.of(this).get(ActividadesDialogViewModel.class);
+        actividadesDialogViewModel.RetrieveList(_id).observe(this, new Observer<List<ActividadesEntity>>() {
+            @Override
+            public void onChanged(@Nullable List<ActividadesEntity> actividadesEntitiesList) {
+                int length = actividadesEntitiesList.size();
+                items = new CharSequence[length];
+                marcados = new boolean[length];
+
+                for(int i = 0; i < length; i ++) {
+                    items[i] = actividadesEntitiesList.get(i).getActividad();
+                    Log.i("TAREAS_ACTIVIADES", actividadesEntitiesList.get(i).getActividad());
+                }
+                adapter.submitList(actividadesEntitiesList);
             }
         });
     }
@@ -114,13 +133,27 @@ public class EditTareaActivity extends AppCompatActivity implements DialogInsert
                 dialog.EXTRA_ID = _id;
                 dialog.show(getSupportFragmentManager(), "DialogInsertActividad");
                 return true;
-
             case R.id.btn_update_actividad:
-                DialogUpdateActividad customDialog = new DialogUpdateActividad(this);
-                customDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                customDialog.show();
-                return true;
+                Log.i("ACTIVIDAD_UPDATE", "SE HIZO CLICK");
 
+                AlertDialog.Builder  builder = new AlertDialog.Builder(EditTareaActivity.this);
+                builder.setTitle("Selecciona las actividades");
+                builder.setMultiChoiceItems(items, marcados, new DialogInterface.OnMultiChoiceClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i, boolean isChecked) {
+                        if(isChecked){
+                            marcados[i] = isChecked;
+                        }//if
+                        else {
+                            marcados[i] = false;
+                        }//else
+                    }
+                });
+
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -131,6 +164,5 @@ public class EditTareaActivity extends AppCompatActivity implements DialogInsert
         DialogInsertActividad dialog = new DialogInsertActividad();
         dialog.EXTRA_ID = _id;
         dialog.show(getSupportFragmentManager(), "DialogInsertActividad");
-
     }
 }
