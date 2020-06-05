@@ -12,7 +12,7 @@ import com.itslp.tareas.db.dao.TareasDao;
 import com.itslp.tareas.db.entity.ActividadesEntity;
 import com.itslp.tareas.db.entity.TareasEntity;
 
-@Database(entities = {TareasEntity.class, ActividadesEntity.class}, version = 3)
+@Database(entities = {TareasEntity.class, ActividadesEntity.class}, version = 4)
 @TypeConverters({Converters.class})
 public abstract class TareaRoomDatabase extends RoomDatabase {
     public abstract TareasDao tareasDao();

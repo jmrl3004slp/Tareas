@@ -10,11 +10,9 @@ public class TareasEntity {
     @PrimaryKey(autoGenerate = true)
     public int id;
     private String nombre;
-    private String fecha;
 
-    public TareasEntity(String nombre, String fecha) {
+    public TareasEntity(String nombre) {
         this.nombre = nombre;
-        this.fecha = fecha;
     }
 
     public int getId() {
@@ -31,13 +29,5 @@ public class TareasEntity {
 
     public void setNombre(String _nombre){
         this.nombre = _nombre;
-    }
-
-    public String getFecha() {
-        return this.fecha;
-    }
-
-    public void setFecha(String fecha){
-        this.fecha = fecha;
     }
 }

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <item
+        android:id="@+id/menu__option_edit_tarea"
+        android:title="@string/editar_tarea" />
+    <item
+        android:id="@+id/menu_option_add_actividad"
+        android:title="@string/aniadir_actividad" />
+</menu>

@@ -5,10 +5,9 @@
     android:orientation="vertical">
 
     <EditText
-        android:id="@+id/EditActividad"
+        android:id="@+id/etAddTarea"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="@string/descripcion_de_la_actividad" />
-
+        android:hint="@string/insertar_descripci_n_de_la_tarea" />
 </LinearLayout>

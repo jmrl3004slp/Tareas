@@ -1,6 +1,5 @@
 package com.itslp.tareas.ui.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -20,16 +19,15 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.itslp.tareas.R;
 import com.itslp.tareas.db.entity.TareasEntity;
 import com.itslp.tareas.ui.adapters.MyTareaRecyclerViewAdapter;
-import com.itslp.tareas.ui.dialogs.DialogInsertTarea;
+import com.itslp.tareas.ui.dialogs.works.DialogAddWork;
+import com.itslp.tareas.viewmodel.ActividadesDialogViewModel;
 import com.itslp.tareas.viewmodel.TareasDialogViewModel;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements DialogInsertTarea.OnSimpleDialogListener {
-    public static final int ADD_NOTE_REQUEST = 1;
-    public static final int EDIT_NOTE_REQUEST = 2;
-
-    private TareasDialogViewModel tareasDialogViewModel;
+public class MainActivity extends AppCompatActivity implements DialogAddWork.OnSimpleDialogListener {
+    public static TareasDialogViewModel tareasDialogViewModel;
+    public static ActividadesDialogViewModel actividadesDialogViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements DialogInsertTarea
         buttonAddNote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new DialogInsertTarea().show(getSupportFragmentManager(), "DialogoInserTarea");
+                new DialogAddWork().show(getSupportFragmentManager(), "DialogoInserTarea");
             }
         });
 
@@ -48,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements DialogInsertTarea
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
 
-        final MyTareaRecyclerViewAdapter adapter = new MyTareaRecyclerViewAdapter();
+        final MyTareaRecyclerViewAdapter adapter = new MyTareaRecyclerViewAdapter(this, MainActivity.this, getSupportFragmentManager());
         recyclerView.setAdapter(adapter);
 
         tareasDialogViewModel = ViewModelProviders.of(this).get(TareasDialogViewModel.class);
@@ -59,8 +57,7 @@ public class MainActivity extends AppCompatActivity implements DialogInsertTarea
             }
         });
 
-        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
-                ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
                 return false;
@@ -72,51 +69,6 @@ public class MainActivity extends AppCompatActivity implements DialogInsertTarea
                 Toast.makeText(MainActivity.this, "Tarea Eliminada", Toast.LENGTH_SHORT).show();
             }
         }).attachToRecyclerView(recyclerView);
-
-        adapter.setOnItemClickListener(new MyTareaRecyclerViewAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(TareasEntity tareasEntity) {
-                Intent intent = new Intent(MainActivity.this, EditTareaActivity.class);
-                intent.putExtra(EditTareaActivity.EXTRA_ID, tareasEntity.getId());
-                intent.putExtra(EditTareaActivity.EXTRA_NAME, tareasEntity.getNombre());
-                intent.putExtra(EditTareaActivity.EXTRA_DATE, tareasEntity.getFecha());
-                startActivityForResult(intent, EDIT_NOTE_REQUEST);
-            }
-        });
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == ADD_NOTE_REQUEST && resultCode == RESULT_OK) {
-            String nombre = data.getStringExtra(EditTareaActivity.EXTRA_NAME);
-            String fecha = data.getStringExtra(EditTareaActivity.EXTRA_DATE);
-
-            TareasEntity note = new TareasEntity(nombre, fecha);
-
-            tareasDialogViewModel.Create(note);
-
-            Toast.makeText(this, "Tarea guardada", Toast.LENGTH_SHORT).show();
-        } else if (requestCode == EDIT_NOTE_REQUEST && resultCode == RESULT_OK) {
-            int id = data.getIntExtra(EditTareaActivity.EXTRA_ID, -1);
-            if (id == -1) {
-                Toast.makeText(this, "La tarea no pudo ser actualizada", Toast.LENGTH_SHORT).show();
-                return;
-            }
-
-            String nombre = data.getStringExtra(EditTareaActivity.EXTRA_NAME);
-            String fecha = data.getStringExtra(EditTareaActivity.EXTRA_DATE);
-
-            TareasEntity note = new TareasEntity(nombre, fecha);
-
-            note.setId(id);
-            tareasDialogViewModel.Update(note);
-
-            Toast.makeText(this, "Tarea actualizada", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, "Tarea no guardada", Toast.LENGTH_SHORT).show();
-        }
     }
 
     @Override
@@ -140,6 +92,6 @@ public class MainActivity extends AppCompatActivity implements DialogInsertTarea
 
     @Override
     public void clickBotonOK() {
-        new DialogInsertTarea().show(getSupportFragmentManager(), "DialogoInserTarea");
+        new DialogAddWork().show(getSupportFragmentManager(), "DialogoInserTarea");
     }
 }
