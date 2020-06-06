@@ -6,7 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import com.itslp.tareas.ActividadesRepository;
+import com.itslp.tareas.repository.ActividadesRepository;
 import com.itslp.tareas.db.entity.ActividadesEntity;
 
 import java.util.List;
@@ -31,6 +31,10 @@ public class ActividadesDialogViewModel extends AndroidViewModel {
 
     public void Update(ActividadesEntity tareasEntity) {
         actividadesRepository.Update(tareasEntity);
+    }
+
+    public void Update(int idTarea, String actividad, boolean terminado) {
+        actividadesRepository.Update(idTarea, actividad, terminado);
     }
 
     public void Delete(ActividadesEntity eliminaEntity) {

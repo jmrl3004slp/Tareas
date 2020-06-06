@@ -10,7 +10,6 @@ import android.widget.Toast;
 
 import com.itslp.tareas.R;
 import com.itslp.tareas.db.entity.ActividadesEntity;
-import com.itslp.tareas.db.entity.TareasEntity;
 import com.itslp.tareas.ui.activities.MainActivity;
 
 public class DialogAddActividad extends Dialog implements View.OnClickListener {
@@ -18,6 +17,7 @@ public class DialogAddActividad extends Dialog implements View.OnClickListener {
     private static String EXTRA_NAME = "EXTRA_NAME";
 
     private Activity activity;
+
     private EditText etDescripcion;
     private Button btnAddActividad;
     private Button btnCancelarAddActividad;
@@ -30,7 +30,7 @@ public class DialogAddActividad extends Dialog implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.dialog_edit_tarea);
+        setContentView(R.layout.dialog_add_activitidad);
 
         etDescripcion = findViewById(R.id.etAddActivity);
 
@@ -52,6 +52,7 @@ public class DialogAddActividad extends Dialog implements View.OnClickListener {
                 }
 
                 MainActivity.actividadesDialogViewModel.Create(new ActividadesEntity(EXTRA_ID_WORK, EXTRA_NAME, false));
+                dismiss();
                 break;
             case R.id.btn_cancel_add_activity:
                 dismiss();
@@ -59,7 +60,5 @@ public class DialogAddActividad extends Dialog implements View.OnClickListener {
             default:
                 break;
         }
-        dismiss();
-
     }
 }

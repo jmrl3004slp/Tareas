@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ui.activities.EditTareaActivity">
     <item
-        android:id="@+id/btn_add_actividad"
+        android:id="@+id/menu_add_actividad"
         android:title="@string/aniadir_actividad" />
     <item
-        android:id="@+id/btn_update_actividad"
+        android:id="@+id/menu_update_actividad"
         android:title="@string/actualizar_actividad" />
 </menu>

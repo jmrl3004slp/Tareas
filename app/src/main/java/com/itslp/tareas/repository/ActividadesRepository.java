@@ -1,4 +1,4 @@
-package com.itslp.tareas;
+package com.itslp.tareas.repository;
 
 import android.app.Application;
 import android.os.AsyncTask;
@@ -33,6 +33,10 @@ public class ActividadesRepository {
         new ActividadesRepository.UpdateAsyncTask(actividadesDao).execute(actividadesEntity);
     }
 
+    public void Update(int idTarea, String actividad, boolean terminado) {
+        new ActividadesRepository.UpdateAsyncTask(actividadesDao).execute(new ActividadesEntity(idTarea, actividad, terminado));
+    }
+
     public void Delete(ActividadesEntity actividadesEntity) {
         new ActividadesRepository.DeleteAsyncTask(actividadesDao).execute(actividadesEntity);
     }
@@ -65,6 +69,24 @@ public class ActividadesRepository {
             return null;
         }//doInBackground
     }//DeleteAsyncTask
+
+    private static class UpdateAnsynTask extends AsyncTask<ActividadesEntity, Void, Void> {
+        private ActividadesDao actividadesAsyncTask;
+
+        UpdateAnsynTask(ActividadesDao dao) {
+            this.actividadesAsyncTask = dao;
+        }
+
+        @Override
+        protected Void doInBackground(ActividadesEntity... actividadesEntities) {
+            int idTarea = actividadesEntities[0].getIdTarea();
+            String actividad = actividadesEntities[0].getActividad();
+            boolean terminado = actividadesEntities[0].isTerminada();
+
+            actividadesAsyncTask.update(idTarea, actividad, terminado);
+            return null;
+        }
+    }
 
     private static class DeleteAsyncTask extends AsyncTask<ActividadesEntity, Void, Void> {
         private ActividadesDao notaDaoAsyncTask;

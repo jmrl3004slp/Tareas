@@ -10,7 +10,7 @@
     <string name="eliminar_todas_las_tareas">Eliminar todas las tareas</string>
     <string name="descripcion_de_la_actividad">Descripción de la actividad</string>
     <string name="aniadir_actividad">Añadir actividad</string>
-    <string name="actualizar_actividad">Actualizar actividad</string>
+    <string name="actualizar_actividad">Actualizar actividades</string>
     <string name="editar_tarea">Editar tarea</string>
     <string name="aceptar">Aceptar</string>
 </resources>

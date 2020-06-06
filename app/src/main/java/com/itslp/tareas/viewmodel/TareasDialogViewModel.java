@@ -6,7 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import com.itslp.tareas.TareasRepository;
+import com.itslp.tareas.repository.TareasRepository;
 import com.itslp.tareas.db.entity.TareasEntity;
 
 import java.util.List;

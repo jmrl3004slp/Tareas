@@ -56,6 +56,7 @@ public class DialogUpdateWork extends Dialog implements View.OnClickListener {
 
                 note.setId(EXTRA_ID);
                 MainActivity.tareasDialogViewModel.Update(note);
+                dismiss();
                 break;
             case R.id.btn_cancel_edit_work:
                 dismiss();
@@ -63,6 +64,5 @@ public class DialogUpdateWork extends Dialog implements View.OnClickListener {
             default:
                 break;
         }
-        dismiss();
     }
 }

@@ -24,4 +24,7 @@ public interface ActividadesDao {
 
     @Delete
     void delete(ActividadesEntity actividad);
+
+    @Query("UPDATE actividades SET terminada = :terminado WHERE idTarea = :idTarea AND actividad = :actividad")
+    void update(int idTarea, String actividad, boolean terminado);
 }

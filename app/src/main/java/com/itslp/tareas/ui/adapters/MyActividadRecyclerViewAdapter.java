@@ -1,9 +1,14 @@
 package com.itslp.tareas.ui.adapters;
 
+import android.app.Activity;
+import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.ImageView;
+import android.widget.PopupMenu;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
@@ -12,9 +17,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.itslp.tareas.R;
 import com.itslp.tareas.db.entity.ActividadesEntity;
+import com.itslp.tareas.ui.activities.ListActivitiesActivity;
 
 public class MyActividadRecyclerViewAdapter extends ListAdapter<ActividadesEntity, MyActividadRecyclerViewAdapter.ViewHolder> {
     private MyActividadRecyclerViewAdapter.OnItemClickListener mListener;
+    private Context mCtx;
+    private Activity mActivity;
 
     protected MyActividadRecyclerViewAdapter(@NonNull DiffUtil.ItemCallback<ActividadesEntity> diffCallback) {
         super(diffCallback);
@@ -37,6 +45,13 @@ public class MyActividadRecyclerViewAdapter extends ListAdapter<ActividadesEntit
         }
     };
 
+    public MyActividadRecyclerViewAdapter(Context context, Activity activity) {
+        super(DIFF_CALLBACK);
+
+        this.mCtx = context;
+        this.mActivity = activity;
+    }
+
     @NonNull
     @Override
     public MyActividadRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -49,6 +64,23 @@ public class MyActividadRecyclerViewAdapter extends ListAdapter<ActividadesEntit
         ActividadesEntity currentTareas = getItem(position);
         holder.chckActividad.setChecked(currentTareas.isTerminada());
         holder.chckActividad.setText(currentTareas.getActividad());
+        holder.buttonViewOption.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //creating a popup menu
+                PopupMenu popup = new PopupMenu(mCtx, holder.buttonViewOption);
+                //inflating menu from xml resource
+                popup.inflate(R.menu.menu_options_item);
+                //adding click listener
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+
+                    @Override
+                    public boolean onMenuItemClick(MenuItem menuItem) {
+                        return false;
+                    }
+                });
+            }
+        });
     }
 
     public ActividadesEntity getTareaAt(int position) {
@@ -65,11 +97,14 @@ public class MyActividadRecyclerViewAdapter extends ListAdapter<ActividadesEntit
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public CheckBox chckActividad;
+        public ImageView buttonViewOption;
 
         public ViewHolder(View view) {
             super(view);
 
             this.chckActividad = view.findViewById(R.id.checkBox);
+            this.buttonViewOption = view.findViewById(R.id.btnMenuOpcionesActividad);
+
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

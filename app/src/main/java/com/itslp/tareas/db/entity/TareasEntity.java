@@ -8,7 +8,7 @@ import java.util.Date;
 @Entity(tableName = "tareas")
 public class TareasEntity {
     @PrimaryKey(autoGenerate = true)
-    public int id;
+    private int id;
     private String nombre;
 
     public TareasEntity(String nombre) {

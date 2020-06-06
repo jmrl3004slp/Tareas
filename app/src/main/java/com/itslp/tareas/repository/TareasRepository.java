@@ -1,4 +1,4 @@
-package com.itslp.tareas;
+package com.itslp.tareas.repository;
 
 import android.app.Application;
 import android.os.AsyncTask;

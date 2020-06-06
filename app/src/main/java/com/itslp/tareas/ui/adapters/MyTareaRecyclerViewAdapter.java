@@ -22,7 +22,6 @@ import com.itslp.tareas.ui.dialogs.activity.DialogAddActividad;
 import com.itslp.tareas.ui.dialogs.works.DialogUpdateWork;
 
 public class MyTareaRecyclerViewAdapter extends ListAdapter<TareasEntity, MyTareaRecyclerViewAdapter.ViewHolder> {
-    private FragmentManager mFragmentManager;
     private OnItemClickListener mListener;
     private Context mCtx;
     private Activity mActivity;
@@ -31,12 +30,11 @@ public class MyTareaRecyclerViewAdapter extends ListAdapter<TareasEntity, MyTare
         super(diffCallback);
     }
 
-    public MyTareaRecyclerViewAdapter(Context context, Activity activity, FragmentManager supportFragmentManager) {
+    public MyTareaRecyclerViewAdapter(Context context, Activity activity) {
         super(DIFF_CALLBACK);
 
         this.mCtx = context;
         this.mActivity = activity;
-        this.mFragmentManager = supportFragmentManager;
     }
 
     public MyTareaRecyclerViewAdapter() {

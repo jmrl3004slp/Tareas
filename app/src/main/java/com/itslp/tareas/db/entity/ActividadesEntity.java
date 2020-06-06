@@ -11,6 +11,8 @@ public class ActividadesEntity {
     private String actividad;
     private boolean terminada;
 
+    public ActividadesEntity() {}
+
     public ActividadesEntity(int idTarea, String actividad, boolean terminada) {
         this.idTarea = idTarea;
         this.actividad = actividad;
